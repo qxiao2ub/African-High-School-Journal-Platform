@@ -1,0 +1,9 @@
+name,email,country,expertise,fields
+Dr. Amina Diallo,amina.diallo@example.org,Senegal,"renewable energy, solar cells, physics education, electrical circuits",Physics;Engineering;Energy
+Prof. Kwame Mensah,kwame.mensah@example.org,Ghana,"machine learning, data science, statistics, Python, youth research mentoring",Computer Science;Data Science;Mathematics
+Dr. Njeri Okafor,njeri.okafor@example.org,Kenya,"public health, biology, epidemiology, scientific writing for students",Biology;Public Health
+Ms. Thandiwe Moyo,thandiwe.moyo@example.org,South Africa,"literature review methods, social science research, education policy",Social Science;Education
+Dr. Youssef Benali,youssef.benali@example.org,Morocco,"robotics, embedded systems, control systems, engineering design",Engineering;Robotics
+Dr. Fatima Hassan,fatima.hassan@example.org,Egypt,"environmental chemistry, water quality, climate adaptation, laboratory methods",Chemistry;Environment
+Mr. Samuel Adeyemi,samuel.adeyemi@example.org,Nigeria,"mathematics modeling, optimization, statistics, student research projects",Mathematics;Data Science
+Dr. Mariam Kamara,mariam.kamara@example.org,Sierra Leone,"agriculture technology, food security, remote sensing, sustainable development",Agriculture;Environment

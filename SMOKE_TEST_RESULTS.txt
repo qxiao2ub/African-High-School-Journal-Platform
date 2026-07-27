@@ -1,0 +1,7 @@
+SMOKE TEST PASSED
+seeded: {'reviewers': 8, 'sources': 4}
+first_manuscript_id: 1
+copy_similarity_score: 1.0
+review_id: 1
+published_slug: ahsj-2026-1-solar-panel-voltage-in-school-laboratories
+assignment_count: 6
