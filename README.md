@@ -1,0 +1,1 @@
+# African-High-School-Journal-Platform
