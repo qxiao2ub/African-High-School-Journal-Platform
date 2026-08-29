@@ -1,6 +1,11 @@
 # African High School Journal Platform
 
-A Streamlit MVP for an AI-supported high-school research journal platform founded by Kavya. The platform is designed to help African high school students upload manuscripts, write drafts online, receive AI-assisted plagiarism checks, match submissions to teachers/professors with relevant expertise, collect peer-review recommendations, and publish accepted electronic papers in an online library.
+A Streamlit MVP for an AI-supported high-school research journal platform founded and built by Kavya Kaushal Shah, with advising support from Dr. Qingyang Xiao. The platform is designed to help African high school students upload manuscripts, write drafts online, receive AI-assisted plagiarism checks, match submissions to teachers/professors with relevant expertise, collect peer-review recommendations, and publish accepted electronic papers in an online library.
+
+## Project credits
+
+- **Founder / Author:** Kavya Kaushal Shah
+- **Advisor:** Dr. Qingyang Xiao
 
 This repository is intentionally built with a free/low-cost stack:
 
@@ -106,4 +111,4 @@ streamlit run app.py
 
 ## Copyright and open source note
 
-Kavya and contributors can publish the source code under an open-source license such as MIT, Apache-2.0, or GPL. The platform name, logo, website content, and source code copyright notices should be kept clear. Individual student papers should keep author copyright unless the journal adopts a stated publication license.
+Kavya Kaushal Shah and contributors can publish the source code under an open-source license such as MIT, Apache-2.0, or GPL. The platform name, logo, website content, and source code copyright notices should be kept clear. Individual student papers should keep author copyright unless the journal adopts a stated publication license.

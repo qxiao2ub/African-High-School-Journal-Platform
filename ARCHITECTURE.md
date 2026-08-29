@@ -1,5 +1,9 @@
 # Architecture and Data Schema
 
+**Founder / Author:** Kavya Kaushal Shah  
+**Advisor:** Dr. Qingyang Xiao
+
+
 ## Goal
 
 Build a practical MVP for an electronic high-school journal platform focused on African students. The MVP supports submission, online drafting, AI-assisted plagiarism screening, reviewer matching, peer-review recommendations, and electronic publication.

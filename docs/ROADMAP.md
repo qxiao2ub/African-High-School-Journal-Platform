@@ -1,5 +1,9 @@
 # Roadmap
 
+**Founder / Author:** Kavya Kaushal Shah  
+**Advisor:** Dr. Qingyang Xiao
+
+
 ## MVP included here
 
 - Streamlit web app

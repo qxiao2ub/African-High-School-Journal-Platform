@@ -7,7 +7,7 @@ import pandas as pd
 import streamlit as st
 
 from journal_platform.ai import plagiarism_scan, word_count
-from journal_platform.config import APP_NAME, APP_TAGLINE, DB_PATH, PLAGIARISM_HIGH_THRESHOLD, PLAGIARISM_LOW_THRESHOLD
+from journal_platform.config import APP_NAME, APP_TAGLINE, AUTHOR_NAME, ADVISOR_NAME, DB_PATH, PLAGIARISM_HIGH_THRESHOLD, PLAGIARISM_LOW_THRESHOLD
 from journal_platform.db import execute, fetch_all, fetch_one, initialize_with_seed_data, upsert_user
 from journal_platform.document_io import read_uploaded_file
 from journal_platform.services import (
@@ -65,7 +65,7 @@ def risk_box(score: float, report: str) -> None:
 with st.sidebar:
     st.title("Journal login")
     role = st.selectbox("Role", ["student", "reviewer", "admin"])
-    name = st.text_input("Name", value="Kavya" if role == "admin" else "")
+    name = st.text_input("Name", value=AUTHOR_NAME if role == "admin" else "")
     email = st.text_input("Email", value="kavya@example.org" if role == "admin" else "")
     country = st.text_input("Country", value="")
     expertise = ""
@@ -80,6 +80,9 @@ with st.sidebar:
             st.success(f"Profile saved for {name}.")
 
     st.divider()
+    st.caption(f"Founder / Author: {AUTHOR_NAME}")
+    st.caption(f"Advisor: {ADVISOR_NAME}")
+    st.divider()
     stats = manuscript_stats(DB_PATH)
     st.metric("Published", stats.get("published", 0))
     st.metric("Under review", stats.get("under_review", 0))
@@ -87,6 +90,7 @@ with st.sidebar:
 
 st.title(APP_NAME)
 st.caption(APP_TAGLINE)
+st.markdown(f"**Founder / Author:** {AUTHOR_NAME}  |  **Advisor:** {ADVISOR_NAME}")
 st.info(
     "MVP note: this demo uses local similarity search and demo login. For real student use, add production authentication, privacy/consent policies, and a licensed plagiarism source."
 )
@@ -335,7 +339,7 @@ with about_tab:
         """
         **Mission.** Encourage African high school students to practice responsible research, peer review, revision, and electronic publication.
 
-        **Founder/build lead.** Kavya can use this as a GitHub-open-source MVP and build toward a formal journal platform.
+        **Founder / build lead.** Kavya Kaushal Shah is the main builder and founder of this GitHub-open-source MVP, with advising support from Dr. Qingyang Xiao.
 
         **Electronic first.** This app publishes papers electronically. Printed hard copies can be considered later with a publishing/printing partner.
 

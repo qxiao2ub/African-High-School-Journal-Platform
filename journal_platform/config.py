@@ -3,6 +3,8 @@ import os
 
 APP_NAME = "African High School Research Journal"
 APP_TAGLINE = "AI-supported student research submission, review, and publication"
+AUTHOR_NAME = "Kavya Kaushal Shah"
+ADVISOR_NAME = "Dr. Qingyang Xiao"
 
 BASE_DIR = Path(__file__).resolve().parents[1]
 DATA_DIR = BASE_DIR / "data"

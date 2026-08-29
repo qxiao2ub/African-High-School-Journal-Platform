@@ -1,5 +1,9 @@
 # Author Guidelines
 
+**Founder / Author:** Kavya Kaushal Shah  
+**Advisor:** Dr. Qingyang Xiao
+
+
 ## Scope
 
 The African High School Research Journal welcomes original student research manuscripts from high school students, with a special mission to encourage African students to participate in responsible research and publication.

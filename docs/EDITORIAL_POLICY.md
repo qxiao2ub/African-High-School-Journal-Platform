@@ -1,5 +1,9 @@
 # Editorial Policy
 
+**Founder / Author:** Kavya Kaushal Shah  
+**Advisor:** Dr. Qingyang Xiao
+
+
 ## Mission
 
 The journal promotes high school research literacy, peer review, and publication opportunities, especially for African students and schools.

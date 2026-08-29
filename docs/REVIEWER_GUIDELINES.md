@@ -1,5 +1,9 @@
 # Reviewer Guidelines
 
+**Founder / Author:** Kavya Kaushal Shah  
+**Advisor:** Dr. Qingyang Xiao
+
+
 ## Reviewer role
 
 Reviewers help students improve research quality, clarity, ethics, and presentation. The goal is educational peer review, not gatekeeping.

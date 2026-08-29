@@ -2,9 +2,12 @@
 
 This guide is educational and is not legal advice.
 
+**Founder / Author:** Kavya Kaushal Shah  
+**Advisor:** Dr. Qingyang Xiao
+
 ## Source code
 
-Kavya and contributors can publish the platform code on GitHub under an open-source license. The included `LICENSE` file uses the MIT License as a simple default. Other choices include Apache-2.0 or GPL, depending on the project's goals.
+Kavya Kaushal Shah and contributors can publish the platform code on GitHub under an open-source license. The included `LICENSE` file uses the MIT License as a simple default. Other choices include Apache-2.0 or GPL, depending on the project's goals.
 
 ## Website name and branding
 
