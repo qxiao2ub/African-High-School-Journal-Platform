@@ -1,114 +1,202 @@
 # African High School Journal Platform
 
-A Streamlit MVP for an AI-supported high-school research journal platform founded and built by Kavya Kaushal Shah, with advising support from Dr. Qingyang Xiao. The platform is designed to help African high school students upload manuscripts, write drafts online, receive AI-assisted plagiarism checks, match submissions to teachers/professors with relevant expertise, collect peer-review recommendations, and publish accepted electronic papers in an online library.
+A GitHub-ready Streamlit application for an AI-supported high school research journal focused on African student authors. The platform supports manuscript writing and upload, local similarity screening, AI-assisted reviewer matching, structured peer review, editorial decisions, and open electronic publication.
 
-## Project credits
+**Founder / Author / Main Builder:** Kavya Kaushal Shah  
+**Advisor / Mentor:** Dr. Qingyang Xiao
 
-- **Founder / Author:** Kavya Kaushal Shah
-- **Advisor:** Dr. Qingyang Xiao
+- **Live Streamlit application:** https://african-high-school-journal-platform.streamlit.app/
+- **GitHub repository:** https://github.com/qxiao2ub/African-High-School-Journal-Platform
 
-This repository is intentionally built with a free/low-cost stack:
+![Streamlit UI preview](docs/STREAMLIT_UI_PREVIEW.png)
 
-- Python 3.12+ recommended for Streamlit Community Cloud; Python 3.14 works locally if your dependencies support it.
-- Streamlit for the web interface.
-- SQLite for an MVP database.
-- scikit-learn TF-IDF similarity for local AI-style matching and plagiarism similarity.
-- pypdf and python-docx for PDF/DOCX text extraction.
+## UI migration completed
 
-> Important: This MVP does not search the whole internet for plagiarism. It compares a manuscript to the platform's local corpus: published manuscripts, submitted manuscripts, and the optional sample/source corpus. For production-level internet plagiarism checks, integrate a licensed plagiarism/search API and add an appeals process.
+The supplied Lovable/Vite/React journal design has been migrated into the launchable Streamlit application. The new interface preserves the Python journal workflow while adopting the prototype's:
 
-## Main functions
+- navy, cream, and gold editorial color system;
+- newspaper-style masthead and journal seal;
+- serif publication typography and structured navigation;
+- classroom hero imagery and research-story cards;
+- publication cards, workflow panels, and responsive layouts;
+- professional student, reviewer, and editorial workspaces.
 
-1. **Student upload and online writing**
-   - Students can upload TXT, Markdown, PDF, or DOCX files.
-   - Students can also draft directly in the browser and save the manuscript online.
+The original React design files are retained under `ui_design_reference/react_vite_prototype/` for design provenance and future front-end work. Streamlit deploys only the root Python application; the React reference does not need to be built for Streamlit Community Cloud.
 
-2. **AI-based plagiarism detection**
-   - Uses local TF-IDF cosine similarity to compare the submission with the platform corpus.
-   - Shows matched source titles and similarity scores.
-   - Flags high similarity so students can revise before final submission.
+## Core capabilities
 
-3. **AI-based reviewer matching**
-   - Matches manuscripts to reviewers based on field, keywords, abstract, manuscript text, and reviewer expertise.
-   - Creates reviewer assignments with shareable invite links.
+### Student author workspace
 
-4. **Reviewer portal**
-   - Reviewers can view assigned manuscripts and submit recommendations: accept, minor revision, major revision, or reject.
-   - Review comments are stored with the submission.
+- Upload DOCX, PDF, Markdown, or plain-text manuscripts.
+- Write and revise directly in the online manuscript studio.
+- Save online drafts and track submissions by email.
+- Receive AI-assisted section and keyword suggestions.
+- Run a transparent local similarity screen before submission.
 
-5. **Publication library**
-   - Accepted papers can be published electronically and shown in the searchable public library.
+### AI-assisted integrity support
+
+- Uses TF-IDF vectorization and cosine similarity.
+- Compares the manuscript with the platform's local source corpus and submitted manuscripts.
+- Reports the highest matching sources and similarity percentages.
+- Clearly labels the result as a revision aid, not a plagiarism or misconduct verdict.
+
+### AI reviewer matching
+
+- Profiles each manuscript using title, field, abstract, keywords, and full text.
+- Compares the manuscript profile with reviewer expertise descriptions.
+- Applies a field-match bonus and ranks the best available reviewers.
+- Creates shareable assignment links that open the Reviewer Desk.
+
+### Reviewer Desk
+
+- Shows reviewer assignments by email or assignment link.
+- Provides a read-only manuscript view.
+- Collects comments to the author and confidential comments to the editor.
+- Supports accept, minor revision, major revision, and reject recommendations.
+- Includes a reviewer ethics and conflict-of-interest confirmation.
+
+### Editorial Office
+
+- Displays manuscript pipeline metrics and status charts.
+- Adds or updates reviewer expertise profiles.
+- Inspects similarity reports and reviewer recommendations.
+- Updates editorial status and publishes accepted papers electronically.
+- Exports manuscripts and reviewer records to CSV.
+
+### Open publication library
+
+- Searches published papers by title, abstract, author, country, and keywords.
+- Filters results by research field.
+- Displays professional article cards and full publication views.
+- Provides plain-text publication downloads and stable journal slugs.
+
+## Technology stack
+
+- Python 3.12+ recommended
+- Streamlit
+- SQLite
+- pandas and NumPy
+- scikit-learn TF-IDF and cosine similarity
+- pypdf and python-docx
+- GitHub and Streamlit Community Cloud
+- Google Colab/Jupyter notebook
+- Automated service and UI-integration smoke tests
 
 ## Repository structure
 
 ```text
 african_high_school_journal_platform/
-  app.py                                # Streamlit web app
-  requirements.txt                      # Python dependencies
-  ARCHITECTURE.md                       # Architecture and schema explanation
-  schema.sql                            # SQLite schema
-  README.md                             # Setup and deployment guide
-  LICENSE                               # MIT license placeholder
-  .streamlit/config.toml                # Streamlit UI settings
-  data/
-    seed_reviewers.csv                  # Demo reviewer database
-    sample_corpus.csv                   # Demo comparison corpus
+  app.py
+  requirements.txt
+  README.md
+  ARCHITECTURE.md
+  UI_MIGRATION_NOTES.md
+  CHANGELOG.md
+  schema.sql
+  LICENSE
+  .streamlit/
+    config.toml
+  assets/
+    journal-seal.png
+    hero-classroom.jpg
+    story-robotics.jpg
+    story-debate.jpg
+    story-culture.jpg
+    story-football.jpg
+    favicon.png
   journal_platform/
-    __init__.py
-    ai.py                               # Similarity, plagiarism, reviewer matching
-    config.py                           # Configuration constants
-    db.py                               # SQLite helpers
-    document_io.py                      # PDF/DOCX/TXT extraction
-    services.py                         # Platform business logic
-  tests/
-    smoke_test.py                       # End-to-end smoke test
+    ai.py
+    config.py
+    db.py
+    document_io.py
+    services.py
+    ui.py
+  data/
+    seed_reviewers.csv
+    sample_corpus.csv
   docs/
-    AUTHOR_GUIDELINES.md                # Student submission guidance
-    REVIEWER_GUIDELINES.md              # Reviewer criteria and tone
-    EDITORIAL_POLICY.md                 # Editorial workflow and safeguards
-    COPYRIGHT_AND_LICENSE_GUIDE.md      # Copyright/open-source notes
-    ROADMAP.md                          # MVP and production roadmap
+    AUTHOR_GUIDELINES.md
+    REVIEWER_GUIDELINES.md
+    EDITORIAL_POLICY.md
+    COPYRIGHT_AND_LICENSE_GUIDE.md
+    ROADMAP.md
+    STREAMLIT_UI_PREVIEW.png
+  tests/
+    smoke_test.py
+    ui_integration_test.py
+    app_static_execution_test.py
   notebooks/
     high_school_journal_platform_colab.ipynb
+  ui_design_reference/
+    react_vite_prototype/
 ```
 
 ## Run locally
 
-```bash
-python -m venv .venv
-source .venv/bin/activate        # macOS/Linux
-# .venv\Scripts\activate.bat    # Windows Command Prompt
+### Windows PowerShell
+
+```powershell
+py -m venv .venv
+.venv\Scripts\Activate.ps1
 python -m pip install -r requirements.txt
-python tests/smoke_test.py
+python tests\smoke_test.py
+python tests\ui_integration_test.py
+python tests\app_static_execution_test.py
 streamlit run app.py
 ```
 
-## Run in Google Colab
+### macOS or Linux
 
-1. Open `notebooks/high_school_journal_platform_colab.ipynb` in Google Colab.
-2. Run each cell from top to bottom.
-3. The notebook writes the project files, installs dependencies, runs the smoke test, and shows how to launch Streamlit.
-4. For a public demo link from Colab, use the included optional tunnel cell. Colab sessions are temporary, so this is for demos, not stable hosting.
+```bash
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+python tests/smoke_test.py
+python tests/ui_integration_test.py
+python tests/app_static_execution_test.py
+streamlit run app.py
+```
+
+The local app will normally open at `http://localhost:8501`.
+
+Optional environment variables:
+
+- `JOURNAL_DB_PATH` changes the SQLite database location.
+- `JOURNAL_APP_URL` changes the base URL used in reviewer invitation links.
+- `JOURNAL_GITHUB_URL` changes the repository link displayed in the interface.
 
 ## Deploy on Streamlit Community Cloud
 
-1. Create a GitHub repository.
-2. Upload this project folder to the repository root.
-3. Go to Streamlit Community Cloud and create an app from your GitHub repository.
-4. Set the entrypoint file to `app.py`.
-5. Let Streamlit install dependencies from `requirements.txt`.
+1. Extract the ZIP and upload the contents of `african_high_school_journal_platform/` to the GitHub repository root.
+2. In Streamlit Community Cloud, choose the GitHub repository.
+3. Set the entrypoint to `app.py`.
+4. Deploy. Dependencies are installed from `requirements.txt`.
+5. Use **Manage app -> Reboot app** after replacing an older version.
 
-## Suggested production upgrades
+The `ui_design_reference/` folder is a design archive. It does not change the Streamlit entrypoint and does not require Node.js during Streamlit deployment.
 
-- Replace demo login with a proper authentication provider.
-- Use PostgreSQL/Supabase/Firebase instead of SQLite for concurrent users.
-- Store manuscripts in cloud object storage.
-- Add consent, privacy, youth-safety, and data-retention policies for minors.
-- Add licensed plagiarism/search integration.
-- Add reviewer conflict-of-interest declarations.
-- Add editor workflow with multiple reviewers before final decision.
-- Add DOI/ISSN workflows only after formal journal governance is ready.
+## Google Colab notebook
 
-## Copyright and open source note
+Open `notebooks/high_school_journal_platform_colab.ipynb` in Colab and run the cells from top to bottom. The notebook recreates the current Python/Streamlit project files, installs dependencies, runs the tests, and provides launch and ZIP-packaging cells.
 
-Kavya Kaushal Shah and contributors can publish the source code under an open-source license such as MIT, Apache-2.0, or GPL. The platform name, logo, website content, and source code copyright notices should be kept clear. Individual student papers should keep author copyright unless the journal adopts a stated publication license.
+## Important MVP limitations
+
+This demonstration does **not** search the full internet or commercial scholarly databases for plagiarism. It compares text only with the local corpus available to this deployment. A production journal should integrate a licensed similarity or literature-search provider and establish human review and appeal procedures.
+
+SQLite and local file storage are appropriate for an MVP, but Streamlit Community Cloud storage can be ephemeral and is not suitable as the only authoritative production database. A production release should use managed identity, a cloud database, object storage, encryption, backups, and audit logging.
+
+## Required safeguards before real student use
+
+Because many authors may be minors, a public production release should include:
+
+- verified authentication and role-based authorization;
+- guardian consent where legally or institutionally required;
+- clear privacy, retention, deletion, and data-use policies;
+- reviewer verification, confidentiality, and conflict-of-interest declarations;
+- editorial standards for authorship, citation, research ethics, and corrections;
+- moderation, abuse reporting, accessibility, monitoring, and incident response;
+- human oversight of every AI-supported recommendation.
+
+## Copyright and open-source note
+
+The software is distributed under the MIT License. Individual student authors should retain copyright in their papers unless the journal adopts and clearly communicates a different publication license. The journal name, seal, website content, and brand assets may require separate trademark or copyright planning beyond the software license.

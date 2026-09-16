@@ -1,11 +1,12 @@
 from __future__ import annotations
 
 import re
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
 from .ai import extract_top_terms, plagiarism_scan, match_reviewers, word_count
-from .config import DB_PATH, TOP_REVIEWERS
+from .config import APP_URL, DB_PATH, TOP_REVIEWERS
 from .db import execute, fetch_all, fetch_one, initialize_with_seed_data, upsert_user
 
 
@@ -143,7 +144,7 @@ def assign_reviewers(db_path: Path | str, manuscript_id: int, top_n: int = TOP_R
         top_n=top_n,
     )
     for match in matches:
-        link = f"?assignment_id={manuscript_id}-{match['user_id']}"
+        link = f"{APP_URL}?assignment_id={manuscript_id}-{match['user_id']}"
         execute(
             db_path,
             """
@@ -175,6 +176,8 @@ def list_published(db_path: Path | str = DB_PATH, query: str = "") -> list[dict[
         or query in (r.get("abstract") or "").lower()
         or query in (r.get("keywords") or "").lower()
         or query in (r.get("author_name") or "").lower()
+        or query in (r.get("country") or "").lower()
+        or query in (r.get("field") or "").lower()
     ]
 
 
@@ -257,7 +260,8 @@ def publish_manuscript(db_path: Path | str, manuscript_id: int) -> str:
     if manuscript is None:
         raise ValueError(f"Unknown manuscript_id: {manuscript_id}")
     base_slug = slugify(manuscript["title"])
-    doi_slug = f"ahsj-2026-{manuscript_id}-{base_slug}"
+    publication_year = datetime.now(timezone.utc).year
+    doi_slug = f"ahsj-{publication_year}-{manuscript_id}-{base_slug}"
     execute(
         db_path,
         """

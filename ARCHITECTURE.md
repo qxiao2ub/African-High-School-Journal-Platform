@@ -1,93 +1,163 @@
 # Architecture and Data Schema
 
-**Founder / Author:** Kavya Kaushal Shah  
-**Advisor:** Dr. Qingyang Xiao
+**Founder / Author / Main Builder:** Kavya Kaushal Shah  
+**Advisor / Mentor:** Dr. Qingyang Xiao
 
+## Purpose
 
-## Goal
+The African High School Journal Platform is an electronic-first publication workflow for African high school researchers. It combines a professional journal-style Streamlit interface with manuscript management, transparent AI assistance, expert peer review, editorial decisions, and a public research library.
 
-Build a practical MVP for an electronic high-school journal platform focused on African students. The MVP supports submission, online drafting, AI-assisted plagiarism screening, reviewer matching, peer-review recommendations, and electronic publication.
-
-## High-level architecture
+## System architecture
 
 ```text
-Browser
-  |
-  v
-Streamlit UI (app.py)
-  |
-  v
-Business services (journal_platform/services.py)
-  |
-  +--> AI similarity and matching (journal_platform/ai.py)
-  +--> File text extraction (journal_platform/document_io.py)
-  +--> SQLite persistence (journal_platform/db.py)
-  |
-  v
-SQLite database + optional CSV seed data
+Student / Reviewer / Editor browser
+                |
+                v
+     Streamlit presentation layer
+       app.py + journal_platform/ui.py
+                |
+                v
+        Python service layer
+     journal_platform/services.py
+        /          |           \
+       v           v            v
+ AI similarity  Reviewer     Document text
+ and matching   workflow      extraction
+     ai.py       services.py   document_io.py
+        \          |           /
+         \         v          /
+          ---- SQLite data ----
+              db.py + schema.sql
 ```
 
-## Main entities
+## Presentation layer
 
-### users
-Stores students, reviewers, and admins. In this MVP, authentication is demo-only: a user enters name, email, role, country, and optional expertise.
+`app.py` provides six responsive workspaces:
 
-### manuscripts
-Stores uploaded or online-written manuscripts, metadata, status, plagiarism summary, matched reviewer summary, and publication slug.
+1. Home and mission landing page
+2. Published Research Library
+3. Student Submit / Write workspace
+4. Reviewer Desk
+5. Editorial Office
+6. About, governance, and technology
 
-Status values:
+`journal_platform/ui.py` implements the migrated design system from the supplied React prototype:
 
-- draft
-- submitted
-- under_review
-- minor_revision
-- major_revision
-- accepted
-- rejected
-- published
+- masthead and seal;
+- responsive newspaper-inspired navigation;
+- classroom hero banner;
+- publication, workflow, feature, status, and metric cards;
+- navy, cream, gold, and teal theme;
+- responsive mobile layouts;
+- professional footer and external links.
 
-### manuscript_versions
-Stores historical text snapshots. Each saved draft or submitted manuscript can be versioned.
+The original Vite/React source is archived in `ui_design_reference/react_vite_prototype/`. It is not executed by Streamlit.
 
-### review_assignments
-Stores AI-matched reviewers and assignment state.
+## Service layer
 
-### reviews
-Stores reviewer recommendation and comments.
+`journal_platform/services.py` coordinates:
 
-### plagiarism_sources
-Stores external or local corpus entries used for similarity checks. The demo seeds sample source texts from `data/sample_corpus.csv`.
+- draft storage;
+- submission creation and manuscript versioning;
+- local similarity scanning;
+- reviewer ranking and assignment creation;
+- peer-review storage;
+- status transitions;
+- electronic publication;
+- manuscript and reviewer reporting.
 
-## AI logic
+## AI and data-science layer
 
-### Plagiarism similarity
-The MVP uses TF-IDF vectorization and cosine similarity against a local corpus. It reports the top matching sources and an overall similarity score. This is not a legal or academic misconduct determination; it is a revision aid.
+### Local similarity screening
+
+1. Normalize candidate and corpus text.
+2. Build unigram and bigram TF-IDF vectors.
+3. Compute cosine similarity between the candidate and each local source.
+4. Return the highest score, risk band, and ranked source matches.
+5. Label the result as an assistive screen rather than an academic-misconduct decision.
+
+The MVP corpus includes seed texts and manuscripts already stored in the deployment. It does not represent an internet-wide or commercial plagiarism check.
 
 ### Reviewer matching
-The matcher builds a manuscript profile from title, field, abstract, keywords, and text. It compares that profile against reviewer expertise profiles using TF-IDF cosine similarity and adds a field match bonus.
 
-## Core workflow
+1. Concatenate manuscript title, abstract, field, keywords, and full text.
+2. Vectorize the manuscript profile and reviewer expertise profiles.
+3. Calculate cosine similarity.
+4. Apply a small field-match bonus.
+5. Rank the top reviewers and store assignment records with invite links.
 
-1. Student signs in with demo profile.
-2. Student uploads a file or writes in the online editor.
-3. AI plagiarism scan compares the submission against the local corpus.
-4. Student revises or submits.
-5. AI reviewer matcher assigns top reviewers.
-6. Reviewer enters portal, reads assignment, and leaves recommendation/comments.
-7. Editor/admin can update status and publish accepted papers.
-8. Published papers appear in the public library.
+Human editors remain responsible for reviewer suitability, conflicts of interest, workload, and final assignment decisions.
 
-## Security and governance limitations
+## Data entities
 
-This MVP is not production-secure. Before real student use, add:
+### `users`
 
-- real authentication and authorization;
-- parental/guardian consent process if required;
-- moderation and safeguarding policy;
-- encrypted storage and backups;
-- data retention and removal process;
-- reviewer conflict-of-interest disclosures;
-- audit logs;
-- terms of use and privacy policy;
-- accessibility review;
-- independent editorial board governance.
+Stores students, reviewers, and administrators. Reviewer records include expertise text used by the matching model.
+
+### `manuscripts`
+
+Stores metadata, author information, text, workflow status, local similarity summary, reviewer-match summary, timestamps, and publication slug.
+
+Supported status values:
+
+- `draft`
+- `submitted`
+- `under_review`
+- `minor_revision`
+- `major_revision`
+- `accepted`
+- `rejected`
+- `published`
+
+### `manuscript_versions`
+
+Stores draft and submission snapshots to support future revision history.
+
+### `plagiarism_sources`
+
+Stores local comparison texts and optional URLs.
+
+### `review_assignments`
+
+Stores AI-ranked reviewer assignments, match scores, invitation state, and assignment links.
+
+### `reviews`
+
+Stores reviewer recommendations, comments to authors, confidential comments to editors, confidence, and timestamps.
+
+## End-to-end workflow
+
+1. A student creates a demo profile.
+2. The student uploads a file or writes in the online studio.
+3. The platform extracts text and provides structure hints.
+4. The student runs a local similarity screen.
+5. The student saves a draft or submits the manuscript.
+6. The AI matcher ranks reviewers by expertise.
+7. Reviewers open the Reviewer Desk and submit structured feedback.
+8. An editor inspects reports and reviews, then records a decision.
+9. Accepted work is published in the searchable electronic library.
+10. Editors export records for reporting and backup.
+
+## Deployment model
+
+### MVP
+
+- Streamlit Community Cloud
+- GitHub source repository
+- SQLite database
+- local static assets
+- no external secrets required
+
+### Production target
+
+- managed identity provider;
+- role-based access control;
+- PostgreSQL or another managed relational database;
+- cloud object storage for source manuscripts;
+- transactional email or notification service;
+- licensed similarity or scholarly search integration;
+- monitoring, backups, audit logs, and disaster recovery.
+
+## Safety, privacy, and governance
+
+This repository is a demonstration and is not production-secure. Before real student use, implement verified accounts, youth-safety policies, guardian consent where required, secure communications, privacy and retention controls, conflict-of-interest review, accessibility, content moderation, research ethics standards, and independent editorial governance.

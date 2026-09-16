@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import tempfile
+from datetime import datetime, timezone
 from pathlib import Path
 import sys
 
@@ -8,6 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+from journal_platform.config import APP_URL
 from journal_platform.db import fetch_all, initialize_with_seed_data
 from journal_platform.services import add_review, list_published, publish_manuscript, submit_manuscript
 
@@ -41,6 +43,7 @@ def run_smoke_test() -> dict:
         )
         assert result["manuscript_id"] > 0
         assert len(result["assignments"]) > 0, "Expected reviewer assignments"
+        assert result["assignments"][0]["assignment_link"].startswith(APP_URL), "Expected full reviewer invite URL"
 
         copied_result = submit_manuscript(
             db_path,
@@ -69,9 +72,11 @@ def run_smoke_test() -> dict:
         )
         assert review_id > 0
         slug = publish_manuscript(db_path, result["manuscript_id"])
-        assert slug.startswith("ahsj-2026")
+        assert slug.startswith(f"ahsj-{datetime.now(timezone.utc).year}")
         published = list_published(db_path)
         assert len(published) == 1
+        assert len(list_published(db_path, query="Kenya")) == 1, "Expected country search"
+        assert len(list_published(db_path, query="Energy")) == 1, "Expected field search"
         assignments = fetch_all(db_path, "SELECT * FROM review_assignments")
         assert assignments, "Expected assignments in database"
         return {
