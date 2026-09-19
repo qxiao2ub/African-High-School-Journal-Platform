@@ -59,3 +59,7 @@ The `ui_design_reference/` folder is included for traceability and future design
 ## Streamlit Markdown rendering repair
 
 Streamlit's Markdown renderer treats a blank line as the end of some raw-HTML blocks. The original repeated workflow and feature-card templates inserted blank lines between sibling `<div>` elements, so the first card rendered while the remaining markup was displayed as indented code. The fixed implementation generates each grid as compact, uninterrupted HTML. The regression test checks that the workflow contains five card nodes, the feature area contains six card nodes, and neither payload contains blank-line parser boundaries.
+
+## Streamlit fixed-header safe-area repair
+
+Streamlit Community Cloud renders a fixed application toolbar at the top of the viewport. The earlier compact top padding allowed that toolbar to overlap the journal's date strip and the upper portion of the masthead on some desktop and mobile browser sizes. Version 0.2.2 reserves responsive toolbar clearance using both current and legacy Streamlit block-container selectors, preserves a small visual gap, and includes the device safe-area inset. This keeps the date strip, seal, title, credits, and primary navigation fully visible beneath Streamlit's own controls.

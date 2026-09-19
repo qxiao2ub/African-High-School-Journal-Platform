@@ -1,5 +1,5 @@
 AFRICAN HIGH SCHOOL JOURNAL PLATFORM - TEST RESULTS
-Version 0.2.1 - Streamlit card-grid rendering repair
+Version 0.2.2 - Streamlit fixed-header safe-area repair
 Generated: 2026-09-19
 
 SMOKE TEST PASSED
@@ -26,8 +26,10 @@ workflow_cards: 5
 feature_cards: 6
 compact_html_verified: True
 
-PYTHON COMPILE CHECK PASSED
+TOP HEADER LAYOUT REGRESSION TEST PASSED
+desktop_header_clearance: 3.75rem + 0.75rem
+mobile_header_clearance: 3.5rem + 0.65rem
+safe_area_inset: True
+current_and_legacy_selectors: True
 
-COMMONMARK RAW-HTML RENDER CHECK PASSED
-workflow_cards_rendered: 5
-feature_cards_rendered: 6
+PYTHON COMPILE CHECK PASSED

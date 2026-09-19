@@ -23,7 +23,9 @@ The supplied Lovable/Vite/React journal design has been migrated into the launch
 
 The original React design files are retained under `ui_design_reference/react_vite_prototype/` for design provenance and future front-end work. Streamlit deploys only the root Python application; the React reference does not need to be built for Streamlit Community Cloud.
 
-### Streamlit HTML-grid rendering fix
+### Streamlit deployment rendering fixes
+
+Version 0.2.2 adds a responsive **top safe-area layout** for Streamlit Community Cloud. The app now reserves space for Streamlit's fixed Share/toolbar banner on desktop and mobile, so the date strip, journal masthead, founder/advisor credits, and navigation remain fully visible rather than being covered at the top of the viewport. `tests/top_header_layout_regression_test.py` protects this layout across future edits.
 
 Version 0.2.1 removes a Markdown parsing defect that caused only the first workflow or feature card to render while later HTML tags appeared as visible code. The repeated card markup is now emitted as compact, uninterrupted HTML, and `tests/html_grid_regression_test.py` verifies that all five workflow cards and all six feature cards remain inside their intended grids.
 

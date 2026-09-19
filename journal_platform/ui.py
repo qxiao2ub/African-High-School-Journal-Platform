@@ -42,6 +42,15 @@ def inject_theme() -> None:
             --journal-teal: #1E7F7A;
             --journal-border: #D8D0C0;
             --journal-shadow: 0 18px 45px rgba(12, 34, 61, 0.10);
+            /* Streamlit's fixed toolbar occupies the top of the viewport.
+               Reserve a dedicated safe area so the journal masthead never
+               starts underneath Share, favorite, edit, GitHub, or menu controls. */
+            --streamlit-header-height: 3.75rem;
+            --journal-header-gap: 0.75rem;
+        }
+
+        html {
+            scroll-padding-top: calc(var(--streamlit-header-height) + 1rem);
         }
 
         html, body, [class*="css"] {
@@ -57,18 +66,31 @@ def inject_theme() -> None:
         }
 
         [data-testid="stHeader"] {
-            background: rgba(248, 244, 234, 0.96);
-            border-bottom: 1px solid rgba(18, 53, 91, 0.08);
+            min-height: var(--streamlit-header-height);
+            height: var(--streamlit-header-height);
+            background: rgba(248, 244, 234, 0.98);
+            border-bottom: 1px solid rgba(18, 53, 91, 0.10);
             backdrop-filter: blur(12px);
+            z-index: 999990;
         }
 
         [data-testid="stToolbar"] {
             right: 1rem;
+            top: 0.38rem;
         }
 
+        /* Streamlit uses different block-container test IDs across releases.
+           Target both the current and legacy DOM so the first journal row is
+           always laid out below the fixed Streamlit header instead of beneath it. */
+        [data-testid="stAppViewBlockContainer"],
+        section.main > div.block-container,
         .block-container {
             max-width: 1280px;
-            padding-top: 1.75rem;
+            padding-top: calc(
+                var(--streamlit-header-height) +
+                var(--journal-header-gap) +
+                env(safe-area-inset-top, 0px)
+            ) !important;
             padding-bottom: 5rem;
         }
 
@@ -118,6 +140,8 @@ def inject_theme() -> None:
         }
 
         .journal-topbar {
+            position: relative;
+            z-index: 2;
             display: flex;
             justify-content: space-between;
             gap: 1rem;
@@ -132,6 +156,8 @@ def inject_theme() -> None:
         }
 
         .journal-masthead {
+            position: relative;
+            z-index: 1;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -668,7 +694,16 @@ def inject_theme() -> None:
         }
 
         @media (max-width: 640px) {
-            .block-container { padding-left: 0.75rem; padding-right: 0.75rem; }
+            :root {
+                --streamlit-header-height: 3.5rem;
+                --journal-header-gap: 0.65rem;
+            }
+            [data-testid="stAppViewBlockContainer"],
+            section.main > div.block-container,
+            .block-container {
+                padding-left: 0.75rem;
+                padding-right: 0.75rem;
+            }
             .journal-topbar { display: none; }
             .journal-masthead { align-items: center; gap: 0.75rem; padding: 0.85rem 0.4rem; }
             .journal-masthead img { width: 64px; height: 64px; }

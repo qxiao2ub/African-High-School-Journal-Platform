@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.2 - Streamlit fixed-header safe-area repair (2026-09-19)
+
+- Reserved responsive vertical clearance for Streamlit Community Cloud's fixed top toolbar.
+- Added current and legacy Streamlit block-container selectors for deployment compatibility.
+- Added mobile safe-area handling for narrow screens and devices with display cutouts.
+- Preserved the complete date strip, journal masthead, founder/advisor credits, and navigation above every page.
+- Added `tests/top_header_layout_regression_test.py` to prevent future top-overlap regressions.
+
 ## 0.2.1 - Streamlit card-grid rendering repair (2026-09-19)
 
 - Fixed the Home-page workflow section so all five cards render instead of exposing later `<div>` tags as code.
