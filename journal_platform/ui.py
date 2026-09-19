@@ -800,14 +800,17 @@ def render_workflow() -> None:
         ("4", "Expert peer review", "Collect comments and recommendations: accept, minor revision, major revision, or reject."),
         ("5", "Electronic publish", "Release accepted work to the searchable open-access journal library for global readers."),
     ]
+
+    # Keep sibling HTML elements on one uninterrupted line. Markdown renderers end
+    # a raw-HTML block at a blank line; the former indented triple-quoted strings
+    # therefore rendered only the first card and displayed the remaining tags as
+    # code. Compact markup prevents that parser boundary on Streamlit Cloud.
     cards = "".join(
-        f"""
-        <div class="workflow-card">
-          <div class="workflow-number">{number}</div>
-          <h3>{html.escape(title)}</h3>
-          <p>{html.escape(body)}</p>
-        </div>
-        """
+        f'<div class="workflow-card">'
+        f'<div class="workflow-number">{html.escape(number)}</div>'
+        f'<h3>{html.escape(title)}</h3>'
+        f'<p>{html.escape(body)}</p>'
+        f'</div>'
         for number, title, body in steps
     )
     st.markdown(f'<div class="workflow-grid">{cards}</div>', unsafe_allow_html=True)
@@ -822,14 +825,15 @@ def render_feature_grid() -> None:
         ("Community impact", "African student voices first", "The platform is designed to expand access to research mentorship, publication literacy, and cross-border scholarly visibility."),
         ("Open engineering", "GitHub-ready and extensible", "A modular Python, SQLite, scikit-learn, and Streamlit architecture supports testing now and future migration to managed identity, storage, and databases."),
     ]
+
+    # As with the workflow cards, compact HTML avoids blank-line termination of
+    # the raw-HTML block inside Streamlit's Markdown renderer.
     cards = "".join(
-        f"""
-        <div class="feature-card">
-          <div class="feature-label">{html.escape(label)}</div>
-          <h3>{html.escape(title)}</h3>
-          <p>{html.escape(body)}</p>
-        </div>
-        """
+        f'<div class="feature-card">'
+        f'<div class="feature-label">{html.escape(label)}</div>'
+        f'<h3>{html.escape(title)}</h3>'
+        f'<p>{html.escape(body)}</p>'
+        f'</div>'
         for label, title, body in features
     )
     st.markdown(f'<div class="feature-grid">{cards}</div>', unsafe_allow_html=True)

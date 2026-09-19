@@ -1,5 +1,6 @@
 AFRICAN HIGH SCHOOL JOURNAL PLATFORM - TEST RESULTS
-Generated during the final UI-integration build
+Version 0.2.1 - Streamlit card-grid rendering repair
+Generated: 2026-09-19
 
 SMOKE TEST PASSED
 seeded: {'reviewers': 8, 'sources': 4}
@@ -20,5 +21,13 @@ APP STATIC EXECUTION TEST PASSED
 pages_executed: ['Home', 'Published Library', 'Submit / Write', 'Reviewer Desk', 'Editorial Office', 'About']
 page_count: 6
 
-PYTHON COMPILE CHECK
-COMPILEALL PASSED
+HTML GRID REGRESSION TEST PASSED
+workflow_cards: 5
+feature_cards: 6
+compact_html_verified: True
+
+PYTHON COMPILE CHECK PASSED
+
+COMMONMARK RAW-HTML RENDER CHECK PASSED
+workflow_cards_rendered: 5
+feature_cards_rendered: 6

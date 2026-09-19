@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.2.1 - Streamlit card-grid rendering repair (2026-09-19)
+
+- Fixed the Home-page workflow section so all five cards render instead of exposing later `<div>` tags as code.
+- Fixed the Home and About feature sections so all six AI and platform cards render correctly.
+- Replaced indented, blank-line-separated repeated HTML with compact uninterrupted markup that remains inside Streamlit's raw-HTML block.
+- Added `tests/html_grid_regression_test.py` to verify card counts and prevent the Markdown parser regression from returning.
+- Re-ran the service smoke test, UI integration test, six-page static execution test, Python compilation, and CommonMark rendering check.
+- Regenerated the embedded Google Colab project archive and GitHub-ready ZIP.
+
 ## 0.2.0 - Streamlit UI integration
 
 - Migrated the supplied Vite/React journal design into the Streamlit application.
